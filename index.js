@@ -9,12 +9,11 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 // routes management
 import userRoute from "./src/routes/User.js";
 import bukuRoute from "./src/routes/Buku.js";
-const routes = [userRoute, bukuRoute];
+import kategoriRoute from "./src/routes/Kategori.js";
+const routes = [userRoute, bukuRoute, kategoriRoute];
 
 routes.forEach((route) => {
   app.use(route);
