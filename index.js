@@ -13,7 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 import userRoute from "./src/routes/User.js";
 import bukuRoute from "./src/routes/Buku.js";
 import kategoriRoute from "./src/routes/Kategori.js";
-const routes = [userRoute, bukuRoute, kategoriRoute];
+import katRelasi from "./src/routes/KategoriRelasi.js"
+const routes = [userRoute, bukuRoute, kategoriRoute, katRelasi];
 
 routes.forEach((route) => {
   app.use(route);
