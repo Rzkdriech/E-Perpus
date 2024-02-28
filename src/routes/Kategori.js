@@ -1,9 +1,9 @@
 import express from "express";
-import { getKategori } from "../controllers/Kategori.js";
+import { getKategori, createKategori } from "../controllers/Kategori.js";
 
 const router = express.Router();
 
 router.get("/categories", getKategori);
-router.post("/category");
+router.post("/category", createKategori);
 
 export default router;
