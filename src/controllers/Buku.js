@@ -4,8 +4,12 @@ export const getBuku = async (_, res) => {
   try {
     const response = await prisma.buku.findMany({
       include: {
-        kategoribuku_relasi: true 
-      }
+        kategoribuku_relasi: {
+          include: {
+            kategoribuku: true,
+          },
+        },
+      },
     });
     res.status(200).json(response);
   } catch (error) {
