@@ -26,16 +26,33 @@ export const createBuku = async (req, res) => {
     },
   });
 
-  if (dataExist.length > 0) return res.status(400).json({ msg: "data exists" });
+  const kategori = await prisma.kategoribuku.findFirst({
+    where: {
+      NamaKategori: newBuku.kategoribuku
+    }
+  })
+
+  if (!kategori) return res.status(404).json({ msg: "kategori not found"})
+
+  if (dataExist.length > 0) return res.status(400).json({ msg: "data exists" }); 
 
   try {
     const buku = await prisma.buku.create({
       data: {
-        Cover: newBuku.Cover,
-        Judul: newBuku.Judul,
-        Penulis: newBuku.Penulis,
-        Penerbit: newBuku.Penerbit,
-        TahunTerbit: newBuku.TahunTerbit,
+        Cover: newBuku.cover,
+        Judul: newBuku.judul,
+        Penulis: newBuku.penulis,
+        Penerbit: newBuku.penerbit,
+        TahunTerbit: newBuku.tahunTerbit,
+        kategoribuku_relasi: {
+          create: {
+            kategoribuku: {
+              connect: {
+                KategoriID: kategori.KategoriID
+              },
+            },
+          },
+        },
       },
     });
     res.status(201).json({ msg: "created data", data: buku });
