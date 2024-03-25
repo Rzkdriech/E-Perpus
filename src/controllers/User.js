@@ -10,16 +10,16 @@ export const getUsers = async (_, res) => {
 };
 
 export const createUser = async (req, res) => {
-  const { Password, ConfPass } = req.body;
+  const { password, confPass } = req.body;
   const newUser = req.body;
 
   // Password
-  if (Password != ConfPass)
+  if (password != confPass)
     return res.status(400).json({ msg: "Pastikan password anda benar" });
 
   const checkUser = await prisma.user.findMany({
     where: {
-      Email: newUser.Email
+      Email: newUser.email
     }
   });
 
@@ -28,12 +28,12 @@ export const createUser = async (req, res) => {
   try {
     const user = await prisma.user.create({
       data: {
-        Username: newUser.Username,
-        Password: Password,
-        Email: newUser.Email,
-        Nama_lengkap: newUser.Nama_lengkap,
-        Alamat: newUser.Alamat,
-        Role: newUser.Role
+        Username: newUser.username,
+        Password: password,
+        Email: newUser.email,
+        Nama_lengkap: newUser.nama_lengkap,
+        Alamat: newUser.alamat,
+        Role: "Peminjam"
       }
     });
     res.status(201).json({ msg: "data created", data: user });
